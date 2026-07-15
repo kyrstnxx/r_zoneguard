@@ -11,6 +11,7 @@ A Homeowners' Association Management System for Complaint Tracking, Financial Mo
 | Database | PostgreSQL |
 | Auth | JWT + bcrypt.js |
 | Mapping | Leaflet.js (data prepared in QGIS) |
+| Analytics | R, RStudio, Random Forest ML, CSV-based offline analysis |
 | Email | Nodemailer |
 | Design | Figma, Canva |
 | Version Control | Git & GitHub |
@@ -21,6 +22,7 @@ A Homeowners' Association Management System for Complaint Tracking, Financial Mo
 zoneguard/
 ├── frontend/          # Next.js + React + Tailwind CSS client
 ├── backend/           # Node.js + Express REST API
+├── analytics/         # Offline R scripts, reports, and exported CSV data
 ├── docs/              # ERD, data dictionary, diagrams, meeting notes
 └── README.md
 ```
@@ -37,6 +39,8 @@ deployed independently.
 - npm 10+
 - PostgreSQL 15+ running locally (or a connection string to a hosted instance)
 - Git
+- R 4.x
+- RStudio
 
 ## Getting Started
 
@@ -84,6 +88,10 @@ npm run dev
 cd frontend
 npm run dev
 ```
+
+## Offline Data Analytics Strategy (R Integration)
+
+To handle heavy statistical processing and predictive modeling without bogging down the live web server, ZoneGuard utilizes an offline analytics architecture.
 
 ## Branching Convention
 
