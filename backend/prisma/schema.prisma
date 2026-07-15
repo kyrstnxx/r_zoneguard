@@ -1,0 +1,233 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==========================================
+// 1. ENUMS (System Operational Rules)
+// ==========================================
+
+enum ZoneStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum SystemRole {
+  ADMIN
+  DIRECTOR
+  COLLECTOR
+  HOMEOWNER
+  TENANT
+}
+
+enum AccountStatus {
+  ACTIVE
+  SUSPENDED
+  ARCHIVED
+}
+
+enum BadgeLevel {
+  BRONZE
+  SILVER
+  GOLD
+  EMERALD
+}
+
+enum LotStanding {
+  PAID
+  UNPAID
+  WITH_ARREARS
+  DELINQUENT
+  IN_DISPUTE
+}
+
+enum DelegationStatus {
+  ACTIVE
+  REVOKED
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// ==========================================
+// 2. MODELS (Database Tables)
+// ==========================================
+
+model Zone {
+  zone_id     String     @id @db.VarChar(5)
+  zone_name   String     @unique @db.VarChar(50)
+  zone_status ZoneStatus @default(ACTIVE)
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+
+  users       User[]
+  lots        Lot[]
+}
+
+model User {
+  user_id        String        @id @db.VarChar(15)
+  zone_id        String?       @db.VarChar(5)
+  first_name     String        @db.VarChar(50)
+  last_name      String        @db.VarChar(50)
+  middle_name    String?       @db.VarChar(50)
+  email          String        @unique @db.VarChar(100)
+  phone_number   String        @db.VarChar(20)
+  date_of_birth  DateTime      @db.Date
+  password_hash  String        @db.VarChar(255)
+  system_role    SystemRole
+  account_status AccountStatus @default(ACTIVE)
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @updatedAt
+
+  zone           Zone?         @relation(fields: [zone_id], references: [zone_id])
+  homeowners     Homeowner[]
+  tenants        Tenant[]      @relation("TenantUser")
+  approved_tenants Tenant[]    @relation("AdminApprover")
+  vehicles       Vehicle[]
+  transactions   Transaction[]
+  audit_logs     AuditLog[]
+}
+
+model Homeowner {
+  homeowner_id       String     @id @db.VarChar(15)
+  user_id            String     @db.VarChar(15)
+  streak_count       Int        @default(0)
+  current_star_count Int        @default(0)
+  current_badge_level BadgeLevel @default(BRONZE)
+  created_at         DateTime   @default(now())
+  updated_at         DateTime   @updatedAt
+
+  user               User       @relation(fields: [user_id], references: [user_id])
+  lots               Lot[]
+  payment_disputes   PaymentDispute[]
+}
+
+model Lot {
+  lot_id        String      @id @db.VarChar(10)
+  homeowner_id  String      @db.VarChar(15)
+  zone_id       String      @db.VarChar(5)
+  house_number  String      @db.VarChar(10)
+  block_number  Int?
+  lot_number    String?     @db.VarChar(5)
+  street        String      @db.VarChar(50)
+  longitude     Decimal     @db.Decimal(9, 6)
+  latitude      Decimal     @db.Decimal(9, 6)
+  is_delinquent Boolean     @default(false)
+  lot_standing  LotStanding @default(UNPAID)
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+
+  homeowner     Homeowner   @relation(fields: [homeowner_id], references: [homeowner_id])
+  zone          Zone        @relation(fields: [zone_id], references: [zone_id])
+  tenants       Tenant[]
+  receivables   AccountsReceivable[]
+}
+
+model Tenant {
+  tenant_id           String           @id @db.VarChar(15)
+  lot_id              String           @db.VarChar(10)
+  user_id             String           @db.VarChar(15)
+  permit_url          String?          @db.VarChar(255)
+  delegation_status   DelegationStatus @default(ACTIVE)
+  approval_status     ApprovalStatus   @default(PENDING)
+  approved_by         String?          @db.VarChar(15)
+  approved_at         DateTime?
+  rejection_reason    String?          @db.Text
+  can_process_payment Boolean          @default(false)
+  created_at          DateTime         @default(now())
+  updated_at          DateTime         @updatedAt
+
+  lot                 Lot              @relation(fields: [lot_id], references: [lot_id])
+  user                User             @relation("TenantUser", fields: [user_id], references: [user_id])
+  approver            User?            @relation("AdminApprover", fields: [approved_by], references: [user_id])
+}
+
+model Vehicle {
+  vehicle_id     String        @id @db.VarChar(15)
+  user_id        String        @db.VarChar(15)
+  plate_number   String        @unique @db.VarChar(15)
+  vehicle_type   String        @db.VarChar(20)
+  vehicle_model  String        @db.VarChar(60)
+  vehicle_color  String        @db.VarChar(30)
+  or_img         String        @db.VarChar(255)
+  cr_img         String        @db.VarChar(255)
+  vehicle_status String        @default("PENDING") @db.VarChar(20)
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @updatedAt
+
+  user           User          @relation(fields: [user_id], references: [user_id])
+  transactions   Transaction[]
+}
+
+model Transaction {
+  transaction_id      String    @id @db.VarChar(15)
+  billing_id          String?   @db.VarChar(15)
+  zone_id             String    @db.VarChar(5)
+  amount              Decimal   @db.Decimal(10, 2)
+  payment_category    String    @db.VarChar(30)
+  production_share    Decimal?  @db.Decimal(10, 2)
+  hoa_share           Decimal?  @db.Decimal(10, 2)
+  collector_incentive Decimal?  @db.Decimal(10, 2)
+  payment_method      String    @db.VarChar(20)
+  payment_status      String    @default("PENDING") @db.VarChar(20)
+  payment_proof       String?   @db.VarChar(255)
+  processed_by        String?   @db.VarChar(15)
+  transaction_date    DateTime  @default(now())
+  user_id             String    @db.VarChar(15)
+  vehicle_id          String?   @db.VarChar(15)
+  reference_no        String    @unique @db.VarChar(50)
+
+  user                User      @relation(fields: [user_id], references: [user_id])
+  vehicle             Vehicle?  @relation(fields: [vehicle_id], references: [vehicle_id])
+  billing             AccountsReceivable? @relation(fields: [billing_id], references: [billing_id])
+}
+
+model AccountsReceivable {
+  billing_id        String      @id @db.VarChar(15)
+  billing_month     Int
+  billing_year      Int
+  base_amount       Decimal     @db.Decimal(10, 2)
+  is_annual_payment Boolean     @default(false)
+  billing_status    String      @default("PENDING") @db.VarChar(20)
+  lot_id            String      @db.VarChar(10)
+  due_date          DateTime    @db.Date
+  created_at        DateTime    @default(now())
+  updated_at        DateTime    @updatedAt
+
+  lot               Lot         @relation(fields: [lot_id], references: [lot_id])
+  transactions      Transaction[]
+  payment_disputes  PaymentDispute[]
+}
+
+model PaymentDispute {
+  dispute_id      String    @id @db.VarChar(10)
+  homeowner_id    String    @db.VarChar(15)
+  collector_id    String    @db.VarChar(15)
+  billing_id      String    @db.VarChar(15)
+  reference_month String    @db.VarChar(20)
+  homeowner_claim String    @db.Text
+  evidence_url    String?   @db.VarChar(255)
+  dispute_status  String    @default("REVIEWING") @db.VarChar(20)
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+
+  homeowner       Homeowner @relation(fields: [homeowner_id], references: [homeowner_id])
+  billing         AccountsReceivable @relation(fields: [billing_id], references: [billing_id])
+}
+
+model AuditLog {
+  log_id          BigInt   @id @default(autoincrement())
+  actor_id        String   @db.VarChar(15)
+  action_category String   @db.VarChar(50)
+  target_reference String  @db.VarChar(30)
+  action_details  String   @db.Text
+  timestamp       DateTime @default(now())
+
+  actor           User     @relation(fields: [actor_id], references: [user_id])
+}
