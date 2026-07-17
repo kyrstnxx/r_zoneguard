@@ -1,0 +1,557 @@
+.zg-shell {
+  width: min(1440px, 100% - 32px);
+  margin: 16px auto;
+  min-height: calc(100vh - 32px);
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid #dfe7e2;
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  overflow: hidden;
+}
+
+.zg-sidebar {
+  background: linear-gradient(180deg, #f6faf8 0%, #edf4f0 100%);
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  padding: 22px 16px;
+}
+
+.zg-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.zg-logo {
+  width: 40px;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #157153, #0f5a41);
+  color: #fff;
+  font: 700 0.82rem/1 var(--font-display);
+  display: grid;
+  place-items: center;
+}
+
+.zg-brand strong {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+}
+
+.zg-brand p {
+  margin: 2px 0 0;
+  color: var(--text-soft);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.zg-nav {
+  display: grid;
+  gap: 8px;
+}
+
+.zg-nav-item {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: #2b4038;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.22s ease, background-color 0.22s ease;
+}
+
+.zg-nav-item:hover {
+  transform: translateX(2px);
+  background: #e4eeea;
+}
+
+.zg-nav-item.is-active {
+  background: #dce9e3;
+  box-shadow: inset -3px 0 0 #0f7050;
+}
+
+.zg-sidebar-bottom {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 8px;
+}
+
+.zg-main {
+  padding: 16px 18px 22px;
+}
+
+.zg-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.zg-property-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.zg-tab {
+  border: 1px solid #cfd9d3;
+  border-radius: 999px;
+  background: #f7faf8;
+  padding: 8px 14px;
+  color: #4b5e56;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.zg-tab.is-active {
+  background: linear-gradient(145deg, #146f50, #0f5d44);
+  color: #f9fffc;
+  border-color: transparent;
+}
+
+.zg-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.zg-user strong {
+  display: block;
+  text-align: right;
+  font-size: 0.88rem;
+}
+
+.zg-user p {
+  margin: 0;
+  color: var(--text-soft);
+  text-align: right;
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
+}
+
+.zg-user span {
+  width: 38px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #1a2f88, #261b78);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.zg-grid {
+  display: grid;
+  grid-template-columns: 1fr 286px;
+  gap: 18px;
+}
+
+.zg-content > h1 {
+  margin: 6px 0 12px;
+  font: 700 2rem/1.1 var(--font-display);
+}
+
+.zg-content h2 {
+  margin: 0;
+  font: 700 1.6rem/1.2 var(--font-display);
+  color: #064E3B;
+}
+
+.zg-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(34, 64, 53, 0.07);
+}
+
+.zg-dues {
+  padding: 18px;
+}
+
+.zg-dues-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.zg-dues-head p {
+  width: min(92%, 510px);
+  margin: 8px 0 0;
+  color: #4f645c;
+  line-height: 1.45;
+  font-size: 14px;
+}
+
+.zg-pill {
+  align-self: flex-start;
+  background: #AEEECB;
+  color: #23563B;
+  border: 1px solid #9bddbf;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 9px 12px;
+}
+
+.zg-dues-stats {
+  margin-top: 22px;
+  border-top: 1px solid #e2ebe6;
+  padding-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.zg-dues-stats small {
+  display: block;
+  color: #6a7b74;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.66rem;
+  margin-bottom: 6px;
+}
+
+.zg-dues-stats strong {
+  font: 800 2rem/1 var(--font-display);
+  color: #103f30;
+}
+
+.zg-pill-subtle {
+  border-radius: 999px;
+  background: #bfe9d1;
+  color: #0d5c42;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 5px 10px;
+}
+
+.zg-highlight {
+  color: #2f9f79;
+  font-size: 1.35rem;
+}
+
+.zg-standing {
+  margin-top: 20px;
+}
+
+.zg-badge-card {
+  margin-top: 8px;
+  padding: 14px;
+  display: grid;
+  grid-template-columns: 108px 1fr;
+  gap: 14px;
+  align-items: center;
+}
+
+.zg-badge-coin {
+  width: 100px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, #fff2ad 0%, #d8b55b 40%, #b98a33 100%);
+  border: 4px solid #e0c170;
+  box-shadow: inset 0 0 20px rgba(168, 120, 30, 0.35);
+  display: grid;
+  place-items: center;
+}
+
+.zg-badge-coin span {
+  color: #734d09;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.zg-badge-card h3 {
+  margin: 0 0 5px;
+  font: 700 1.6rem/1.1 var(--font-display);
+}
+
+.zg-badge-card p {
+  margin: 0;
+  color: #4c6058;
+}
+
+.zg-overview {
+  margin-top: 20px;
+}
+
+.zg-overview-grid {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.zg-stat-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 5px 14px rgba(39, 60, 52, 0.06);
+  padding: 14px;
+}
+
+.zg-stat-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #f0f4f2;
+  color: #af594d;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.zg-stat-heading {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6f7e78;
+  font-size: 0.64rem;
+}
+
+.zg-stat-card h3 {
+  margin: 8px 0 0;
+  font-size: 1rem;
+}
+
+.zg-stat-value {
+  margin: 4px 0 8px;
+  font: 800 2rem/1 var(--font-display);
+  color: #154f3c;
+}
+
+.zg-stat-foot {
+  display: flex;
+  justify-content: space-between;
+  color: #90a19a;
+  font-size: 0.8rem;
+}
+
+.zg-service-card {
+  margin-top: 16px;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #0d5d43, #0b4f39);
+  color: #ecfff6;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 14px;
+  align-items: center;
+}
+
+.zg-service-card h3 {
+  margin: 0;
+  font: 700 1.15rem/1 var(--font-display);
+}
+
+.zg-service-card p {
+  margin: 8px 0 0;
+  color: #c7ebda;
+  max-width: 500px;
+}
+
+.zg-service-actions {
+  display: grid;
+  gap: 8px;
+}
+
+.zg-service-actions button {
+  border: 1px solid #327961;
+  background: rgba(6, 41, 29, 0.53);
+  color: #edfff6;
+  font-weight: 700;
+  text-align: left;
+  border-radius: 8px;
+  padding: 11px 12px;
+  cursor: pointer;
+}
+
+.zg-sidepanel {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.zg-payment-card {
+  padding: 14px;
+}
+
+.zg-payment-card h2 {
+  font-size: 1.12rem;
+  margin-bottom: 6px;
+}
+
+.zg-payment-card small {
+  display: block;
+  margin: 10px 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.64rem;
+  color: #73827c;
+}
+
+.zg-qr-box {
+  border-radius: 8px;
+  background: #eff3f1;
+  border: 1px solid #dce7e2;
+  padding: 16px 10px 10px;
+  text-align: center;
+}
+
+.zg-qr-placeholder {
+  margin: 0 auto;
+  width: 110px;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  background:
+    linear-gradient(90deg, #69bfa7 50%, #79c9b4 50%),
+    linear-gradient(#79c9b4 50%, #69bfa7 50%);
+  background-size: 18px 18px;
+  background-position: center;
+  border: 6px solid #f6f9f7;
+  box-shadow: inset 0 0 0 1px #9dd5c1;
+}
+
+.zg-qr-box p {
+  margin: 8px 0 0;
+  font-size: 0.82rem;
+  color: #4c8070;
+  font-weight: 600;
+}
+
+.zg-upload {
+  width: 100%;
+  background: #f8fffc;
+  border: 2px dashed #8bcab0;
+  color: #1d8a67;
+  border-radius: 8px;
+  padding: 14px 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.zg-upload span {
+  display: block;
+  color: #80a798;
+  font-size: 0.68rem;
+  margin-top: 2px;
+}
+
+.zg-payment-card input {
+  width: 100%;
+  border: 1px solid #d2ddd7;
+  border-radius: 8px;
+  background: #fff;
+  padding: 10px 11px;
+  font: inherit;
+  color: #274138;
+}
+
+.zg-submit {
+  margin-top: 10px;
+  width: 100%;
+  border: 0;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #0f6749, #0d523d);
+  color: #f8fffc;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.zg-hours-card {
+  padding: 14px;
+}
+
+.zg-hours-card h3 {
+  margin: 0 0 8px;
+  font: 700 1rem/1.2 var(--font-display);
+}
+
+.zg-hours-row {
+  display: flex;
+  justify-content: space-between;
+  color: #60746d;
+  font-size: 0.83rem;
+  padding: 5px 0;
+}
+
+@media (max-width: 1100px) {
+  .zg-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .zg-sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .zg-sidebar-bottom {
+    margin-top: 10px;
+  }
+
+  .zg-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .zg-service-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .zg-shell {
+    width: calc(100% - 14px);
+    margin: 7px auto;
+    min-height: calc(100vh - 14px);
+    border-radius: 16px;
+  }
+
+  .zg-main {
+    padding: 14px;
+  }
+
+  .zg-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .zg-user {
+    align-self: flex-end;
+  }
+
+  .zg-dues-head {
+    flex-direction: column;
+  }
+
+  .zg-dues-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .zg-badge-card {
+    grid-template-columns: 1fr;
+  }
+
+  .zg-overview-grid {
+    grid-template-columns: 1fr;
+  }
+}
